@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/track-utils.min.js"></script>
+    <!-- <link href="https://yun.tuia.cn/foundnull.css" rel="stylesheet"/> -->
+    <script>
+      let whiteScreen = new Date() - performance.timing.navigationStart
+    </script>
+</head>
+<body>
+    埋点以及错误信息监控
+    <img src="https://yun.tuia.cn/image/kkk.png">
+</body>
+<script>
+   console.log("TrackerUtils.......",trackUtils)
+//    var url = 'http://jsfiddle.net?sendbeacon';
+// var n = 65536; // sendBeacon limit for Chrome v40 on Windows (2^16)
+
+// // this method courtesy of http://stackoverflow.com/questions/14343844/create-a-string-of-variable-length-filled-with-a-repeated-character
+// var data = new Array(n+1).join('X'); // generate string of length n
+
+// if(!navigator.sendBeacon('http://127.0.0.1:3000/saveLog', data))
+// {
+//    alert('data limit reached');
+// }
+
+   let trackerHub = new trackUtils.TrackerHub({
+        appID: 'default', // 埋点数据来源，['h5','小程序'，'web端']
+        trackUtils_extraGlobalInfo:{
+            userId:"123456",
+            channel_type:"jgj_miniprogram"
+        },
+        trackUtils_requestUrl: 'http://127.0.0.1:3000/saveLog', //接口地址
+        trackUtils_enableErrorTracker: true, //是否开启页面错误监控
+        trackUtils_enablePerformance: true, //是否开启性能监控
+        trackUtils_errorBufferTime:3*1000 //3秒钟
+    }) 
+    console.log("trackerHub......",trackerHub)
+    trackerHub.triggerEvent({
+        eventID:"begin",
+        eventTimeStamp:new Date().getTime()
+    })
+</script>
+<script>
+    /**
+     * 一、常见JS执行错误
+     * */
+    // const xx, //语法错误 SyntaxError
+
+    // const person = void 0
+    // person.name // TypeError
+   
+    // nodefined  //ReferenceError
+
+    // (function fn ( ) { fn() })()   //RangeError
+
+
+    /**
+     * 二、网络错误
+     * */
+    // new Image().src = '/remote/image/notdeinfed.png' //ResourceError
+    // fetch('/remote/notdefined', {}) //Http请求错误
+
+    /**
+    * @param {String}  message    错误信息
+    * @param {String}  source    出错文件
+    * @param {Number}  lineno    行号
+    * @param {Number}  colno    列号
+    * @param {Object}  error  Error对象
+    */
+    // window.onerror = function(message, source, lineno, colno, error) {
+    //     console.log('捕获到异常 onerror：', {message, source, lineno, colno, error});
+    //     let strObj = {
+    //         message,
+    //         source,
+    //         lineno,
+    //         colno
+    //     }
+    //     //md5(str)  str
+    // }     
+    // 常规运行时错误，可以捕获 ✅  
+    setTimeout(() => {
+      console.log("................")
+      console.log(notdefined);
+    }, 5000) 
+    console.log(notdefined);
+    // 语法错误，不能捕获 ❌  const notdefined,
+    // 异步错误，可以捕获 ✅
+    // setTimeout(() => {
+    //   console.log("................")
+    //   console.log(notdefined);
+    // }, 5000)
+    // 资源错误，不能捕获 ❌   <img src="https://yun.tuia.cn/image/kkk.png">
+
+
+    // window.addEventListener :  图片、script、css加载错误，都能被捕获 ✅
+    // <img src="https://yun.tuia.cn/image/kkk.png">
+    // window.addEventListener('error', e => {
+    //     let strObj;
+    //     if(e.message){
+    //         const {message, filename, lineno, colno, error} = e
+    //         console.log("e",e)
+    //         strObj = {
+    //             message,
+    //             source:filename,
+    //             lineno,
+    //             colno
+    //         }
+    //     }else if(e){
+    //         //IMG图像加载错误
+    //         const target = e.target || {}
+    //         const {nodeName,className,currentSrc,id} = target
+    //         strObj = {
+    //             nodeName,
+    //             currentSrc,
+    //             id,
+    //             className
+    //         }
+    //     }
+    //     console.log('捕获到异常：addEventListener', strObj);
+
+    // }, true)
+    // window.addEventListener  new Image错误，不能捕获 ❌    new Image().src = 'https://yun.tuia.cn/image/lll.png'
+    // window.addEventListener fetch错误，不能捕获 ❌    fetch('https://tuia.cn/test')
+
+
+    //Promise类型错误
+    // 全局统一处理Promise
+    // window.addEventListener("unhandledrejection", function(e){
+    //     const {message,stack} = e.reason
+    //     let strObj = {
+    //            message:message,//"Failed to fetch"
+    //            stack:stack,//TypeError: Failed to fetch\n    at http://127.0.0.1:5500/examples/index.html:138:5
+    //            type:"unhandledrejection"
+    //     }
+    //     console.log('捕获到异常：unhandledrejection', e,strObj,JSON.stringify(strObj));
+    // });
+    // fetch('https://tuia.cn/test')
+
+    /**
+     * window.onerror和window.addEventListener有可能重叠信息
+     * */
+</script>
+
+
+</html>
