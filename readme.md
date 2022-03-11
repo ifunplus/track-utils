@@ -2,6 +2,23 @@
 
 手动埋点，自动错误监控和性能信息收集
 
+
+## start
+
+
+
+```bash
+cd server
+npm start
+
+
+cd src
+npm run build
+
+cd examples
+open index.html with liveserver
+```
+
 ## Publish
 
 
