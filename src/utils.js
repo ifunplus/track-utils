@@ -11,7 +11,7 @@ const stringify = (obj) => {
 //https://opensource.sensorsdata.cn/opensource/%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5%E6%96%B9%E5%BC%8F%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E6%9C%80%E4%BC%98%E8%A7%A3%EF%BC%9F/
 const reportTracker = function (url, data) {
   console.log("url, data........", url, data);
-  let urlLength = (url + (url.indexOf("?") < 0 ? "?" : "&") + reportData).length;
+  let urlLength = (url + (url.indexOf("?") < 0 ? "?" : "&") + data).length;
   if (urlLength < 2083) {
     sendImg(url, data); //仅仅get
     return;
