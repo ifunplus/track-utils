@@ -1,6 +1,6 @@
 {
   "name": "track-utils",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "埋点工具库",
   "main": "src/index.js",
   "scripts": {

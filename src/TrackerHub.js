@@ -41,11 +41,12 @@ export class TrackerHub {
     triggerEvent(data){
       let processData = {...this._options.trackUtils_extraGlobalInfo,...data}
       let requestUrl = this._options.trackUtils_requestUrl
-      if(this._options.requestType==="sendImg"){
+      let requestType = this._options.trackUtils_requestType
+      if(requestType==="sendImg"){
         sendImg(requestUrl, processData); //仅仅get img不支持，回退xmlHttpRequest
-      }else if(this._options.requestType==="sendBeacon"){
+      }else if(requestType==="sendBeacon"){
         sendBeacon(requestUrl, processData);//post sendBeacon不支持，回退xmlHttpRequest
-      }else if(this._options.requestType==="all"){
+      }else if(requestType==="all"){
         reportTracker(requestUrl,processData) //后端支持get，post，自动处理
       }else{
         xmlHttpRequest(requestUrl, processData); //post
